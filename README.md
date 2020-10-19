@@ -2,11 +2,24 @@
 
 Simple reminder-training example
 
-   * To create new conda environment with name simple 
+
+## 2. Useful commands
+
+   * To create new conda environment with name : simple
 ```
       conda create --name simple
 ```
 
-## 2. File description
+   * To activate simple conda environment
+```
+      conda activate simple
+```
+
+   * To de-activate any current conda environment
+```
+      conda deactivate
+```
+
+## 3. File description
 
 
