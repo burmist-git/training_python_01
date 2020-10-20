@@ -1,72 +1,125 @@
-from datetime import datetime, tzinfo, timedelta
-''' Converts the date to ISO 8601 format
-Segro team, S2DS August 2020 - Aug. 13, 2020
-Contact: M. Fortin, D. Muller
-Partly based on https://stackoverflow.com/questions/46834202/how-to-convert-a-datetime-object-between-cest-and-utc-timezones'''
-    
-class CET(tzinfo):
-    def utcoffset(self, dt):
-        return timedelta(hours=1) + self.dst(dt)
+"""
+Date        : Tue Oct 20 11:18:08 CEST 2020
+Autor       : Leonid Burmistrov
+Description : Example of the simple class in Python.
+"""
 
-    def dst(self, dt):
-        dston_20 = datetime(year=2020, month=3, day=29,hour=1)
-        dstoff_20 = datetime(year=2020, month=10, day=25,hour=2)
-        dston_19 = datetime(year=2019, month=3, day=31,hour=1)
-        dstoff_19 = datetime(year=2019, month=10, day=27,hour=2)
-        if dston_20 <= dt.replace(tzinfo=None) < dstoff_20:
-            return timedelta(hours=1)
-        elif dston_19 <= dt.replace(tzinfo=None) < dstoff_19:
-            return timedelta(hours=1)
-        else:
-            return timedelta(0)
-
-class BST(tzinfo):
-    def utcoffset(self, dt):
-        return timedelta(hours=0) + self.dst(dt)
-
-    def dst(self, dt):
-        dston = datetime(year=dt.year, month=3, day=20)
-        dstoff = datetime(year=dt.year, month=10, day=20)
-        if dston <= dt.replace(tzinfo=None) < dstoff:
-            return timedelta(hours=1)
-        else:
-            return timedelta(0)
+class student:
+    """
+    Simple class to demonstrate self
+    """
+    def __init__(self,name):
+        """
+        Constructor
+        @param name : student name
+        """
+        self.name = name
+        self.marks = []
+        print("Hi {}".format(name))
         
-class UTC(tzinfo):
-    def utcoffset(self, dt):
-        return timedelta(0)
+    def addmarks(self,mark):
+        """
+        Function to add marks
+        @param mark : student mark
+        """
+        self.marks.append(mark)
+        
+    def avg(self):
+        """
+        Function to add marks
+        @param mark : Function to calculate average mark
+        """
+        return sum(self.marks)/len(self.marks)
 
-    def dst(self, dt):
-        return timedelta(0)
+class animal(object):
+    def __init__(self, name):
+        self.name = name
+    def fly(self):
+        print('{} is flying or it is not flying ?'.format(self.name))
 
-def from_cet_to_utc(year, month, day, hour, minute):
-    cet = datetime(year, month, day, hour, minute, tzinfo=CET())
-    utc = cet.astimezone(tz=UTC())
-    return '{:%Y-%m-%dT%H:%M:%SZ}'.format(utc)
+class dog(animal):
+    """
+    Class to demonstrate constructor overloading (super())
+    """
+    def __init__(self, name, food):
+        super (dog, self).__init__(name)
+        self.food = food
+    def fly(self):
+        print('{} can not fly.'.format(self.name))
+    def eat(self):
+        print('{} is fetching {}'.format(self.name, self.food))
 
-def from_bst_to_utc(year, month, day, hour, minute):
-    cet = datetime(year, month, day, hour, minute, tzinfo=BST())
-    utc = cet.astimezone(tz=UTC())
-    return '{:%Y-%m-%dT%H:%M:%SZ}'.format(utc)
+class A(object):
+    def __init__(self):
+        pass
+    def printThis(self):
+        print('Doing this in A')
+        
+class B(A):
+    def printBC(slef):
+        print('This is B')
 
-def from_date_to_iso(year=2020, month=8, day=19, hour=9, minute=0,location="UK"):
-    '''returns the date to ISO 8601 format
-    Input: year, month, day, hour, minute in local time **+ location in country code format**
-    Output: date in ISO 8601 format'''
-    
-    if(year<=2018):
-        print("Daily savings for years before 2019 not implemented")
-        exit()
-    elif location=="UK":
-        return from_bst_to_utc(year, month, day, hour, minute)
-    elif location in ["FR","DE","ES","IT","PL"]:
-        return from_cet_to_utc(year, month, day, hour, minute)
-    else:
-        print("Your location is not supported (yet?)")
-        exit()
+class C(object):
+    def printThis(self):
+        print('Doing this in C')
+    def printBC(slef):
+        print('This is C')
 
+class D(B,C):
+    """
+    Multiple inheritance - depth - first
+    """
+    pass
+
+class E(C,B):
+    pass
+
+class F(C,B):
+    def printBC(slef):
+        print('This is F')
+        
 def main():
-    print("Default date in ISO format: "+from_date_to_iso())
-
+    s = student('leonid')
+    s.addmarks(5)
+    s.addmarks(5)
+    s.addmarks(4)
+    s.addmarks(5)
+    s.addmarks(5)
+    print(s.marks)
+    print(s.avg())
+    print('student.__name__          : ', student.__name__)
+    print('student.__doc__           : ', student.__doc__)
+    print('student.__dir__           : ', student.__dir__)
+    print('student.__getattribute__  : ', student.__getattribute__)
+    print('student.__module__        : ', student.__module__)
+    print('')
+    print('student.addmarks.__name__ : ', student.addmarks.__name__)
+    print('student.addmarks.__doc__  : ', student.addmarks.__doc__)
+    print(dir(student))
+    print('')
+    print('dog.__name__              : ', dog.__name__)
+    print('dog.__doc__               : ', dog.__doc__)
+    print(dir(dog))
+    print('')
+    a = animal('Generic animal')
+    a.fly()
+    d = dog('Wolf','meat')
+    d.fly()
+    d.eat()
+    print('')
+    print('D.__name__                 : ', D.__name__)
+    print('D.__doc__                  : ', D.__doc__)
+    print('D.__mro__                  : ', D.__mro__)
+    print(dir(dog))
+    print('')
+    A().printThis()
+    B().printThis()
+    C().printThis()
+    D().printThis()
+    D().printBC()
+    E().printBC()
+    F().printBC()
+    
 if __name__ == "__main__":
+    print(__name__)
     main()
