@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 '''
 Date        : Mon Oct 19 23:32:26 CEST 2020
 Autor       : Leonid Burmistrov
@@ -9,8 +12,11 @@ import sys
 #
 import module01
 
-if __name__ == "__main__":
+def main():
     os.system('echo "\n 1) Info : --> test of the module01"')
     print(sys.modules['module01'])
     print(sys.modules['module01'].__file__)
-    module01.main()
+    module01.main()    
+
+if __name__ == "__main__":
+    main()

@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 """
 Date        : Tue Oct 20 11:18:08 CEST 2020
 Autor       : Leonid Burmistrov
