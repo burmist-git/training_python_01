@@ -32,6 +32,11 @@ Simple reminder-training example
       conda deactivate
 ```
 
+   * Get help in python
+```
+      python -c "help(str.upper)"
+```
+
 ## 3. File description
 
 
