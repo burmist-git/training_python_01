@@ -38,5 +38,3 @@ Simple reminder-training example
 ```
 
 ## 3. File description
-
-
